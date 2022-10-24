@@ -30,10 +30,10 @@ framework = arduino
 - Node 1: DEPRECATED
 - Node 2: 
   - PMS 5003 Particulate Matter Sensor
-  - Location: next to TV
+  - Location: next to TV (blue box)
 - Node 3:
   - BME 280 Temperature/Humidity Sensor
-  - Location: next to TV
+  - Location: next to TV (green PCB)
 - Node 3:
   - BME 280 Temperature/Humidity Sensor
   - Location: bedroom
