@@ -7,9 +7,9 @@ void connectMQTT();
 
 // Settings
 // ----------------------------------------
-char ssid[] = "untonet-iot";
-char ssid_pass[] = "christonabendybus";
-char mqttHost[] = "10.0.0.132";
+char ssid[] = "";
+char ssid_pass[] = "";
+char mqttHost[] = "";
 char mqttTopic[] = "sensors/node2";
 uint16_t mqttPort = 1883;
 
@@ -80,11 +80,8 @@ void connectMQTT()
 void setup()
 {
   pinMode(LED_BUILTIN, OUTPUT);
-
   Serial.begin(9600);
-
   connectWifi();
-
   client.setServer(mqttHost, mqttPort);
 }
 
@@ -97,16 +94,16 @@ void loop()
   client.loop();
 
   if (Serial.find(0x42))
-  { //start to read when detect 0x42
+  { // start to read after detecting 0x42
     Serial.readBytes(buf, LENG);
 
     if (buf[0] == 0x4d)
     {
       if (checkValue(buf, LENG))
       {
-        PM01Value = transmitPM01(buf);   //count PM1.0 value of the air detector module
-        PM2_5Value = transmitPM2_5(buf); //count PM2.5 value of the air detector module
-        PM10Value = transmitPM10(buf);   //count PM10 value of the air detector module
+        PM01Value = transmitPM01(buf);
+        PM2_5Value = transmitPM2_5(buf);
+        PM10Value = transmitPM10(buf);
       }
     }
   }
@@ -143,7 +140,7 @@ char checkValue(unsigned char *thebuf, char leng)
   }
   receiveSum = receiveSum + 0x42;
 
-  if (receiveSum == ((thebuf[leng - 2] << 8) + thebuf[leng - 1])) //check the serial data
+  if (receiveSum == ((thebuf[leng - 2] << 8) + thebuf[leng - 1])) //check serial data
   {
     receiveSum = 0;
     receiveflag = 1;
@@ -154,20 +151,20 @@ char checkValue(unsigned char *thebuf, char leng)
 int transmitPM01(unsigned char *thebuf)
 {
   int PM01Val;
-  PM01Val = ((thebuf[3] << 8) + thebuf[4]); //count PM1.0 value of the air detector module
+  PM01Val = ((thebuf[3] << 8) + thebuf[4]);
   return PM01Val;
 }
-//transmit PM Value to PC
+
 int transmitPM2_5(unsigned char *thebuf)
 {
   int PM2_5Val;
-  PM2_5Val = ((thebuf[5] << 8) + thebuf[6]); //count PM2.5 value of the air detector module
+  PM2_5Val = ((thebuf[5] << 8) + thebuf[6]);
   return PM2_5Val;
 }
-//transmit PM Value to PC
+
 int transmitPM10(unsigned char *thebuf)
 {
   int PM10Val;
-  PM10Val = ((thebuf[7] << 8) + thebuf[8]); //count PM10 value of the air detector module
+  PM10Val = ((thebuf[7] << 8) + thebuf[8]);
   return PM10Val;
 }

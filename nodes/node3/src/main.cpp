@@ -9,10 +9,10 @@ void connectMQTT();
 
 // Settings
 // ----------------------------------------
-char ssid[] = "untonet-iot";
-char ssid_pass[] = "christonabendybus";
-char mqttHost[] = "10.0.0.132";
-char mqttTopic[] = "sensors/node3";
+char ssid[] = "";
+char ssid_pass[] = "";
+char mqttHost[] = "";
+char mqttTopic[] = "";
 uint16_t mqttPort = 1883;
 
 // Clients
@@ -73,13 +73,9 @@ void connectMQTT()
 void setup()
 {
   pinMode(LED_BUILTIN, OUTPUT);
-
   Serial.begin(9600);
-
   connectWifi();
-
   client.setServer(mqttHost, mqttPort);
-
   bme.begin(0x76);
 }
 
